@@ -21,6 +21,7 @@ jobs:
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
 
+
       - name: Deploy to VPS (staging)
         run: |
           ssh -o IdentitiesOnly=yes \
