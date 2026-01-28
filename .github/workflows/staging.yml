@@ -24,12 +24,9 @@ jobs:
 
       - name: Deploy to VPS (staging)
         run: |
-          ssh -o IdentitiesOnly=yes -i ~/.ssh/id_ed25519 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-            set -e
+          ssh -o IdentitiesOnly=yes \
+          -o StrictHostKeyChecking=yes \
+          -i ~/.ssh/id_ed25519 \
+          ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} \
+          "cd /srv/dao/staging/repo && git pull origin main && cd /srv/dao/staging && docker compose up -d"
 
-            cd /srv/dao/staging/repo
-            git pull origin main
-
-            cd /srv/dao/staging
-            docker compose up -d
-          EOF
