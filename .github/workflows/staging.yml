@@ -24,8 +24,10 @@ jobs:
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
             set -e
+            cd /srv/dao/staging/repo
+            git pull origin main
+
             cd /srv/dao/staging
-            docker compose pull
             docker compose up -d
-            docker image prune -f
           EOF
+
