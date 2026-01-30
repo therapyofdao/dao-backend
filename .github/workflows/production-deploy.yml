@@ -1,0 +1,30 @@
+name: Production Deploy (Backend)
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy backend to production VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USER }}
+          key: ${{ secrets.PROD_SSH_KEY }}
+          script: |
+            set -euo pipefail
+
+            cd ${{ secrets.PROD_PATH }}
+
+            if [ ! -d .git ]; then
+              git clone --branch main --single-branch git@github.com:therapyofdao/dao-backend.git .
+            else
+              git fetch origin main
+              git reset --hard origin/main
+            fi
+
+            docker compose build
+            docker compose up -d

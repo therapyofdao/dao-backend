@@ -1,0 +1,10 @@
+services:
+  backend:
+    container_name: dao-backend-production
+    image: production-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    restart: unless-stopped
