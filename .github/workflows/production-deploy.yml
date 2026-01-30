@@ -20,11 +20,12 @@ jobs:
             cd ${{ secrets.PROD_PATH }}
 
             if [ ! -d .git ]; then
-              git clone --branch main --single-branch git@github.com:therapyofdao/dao-backend.git .
-            else
-              git fetch origin main
-              git reset --hard origin/main
+              git init
+              git remote add origin git@github.com:therapyofdao/dao-backend.git
             fi
+
+            git fetch origin main
+            git checkout -B main origin/main
 
             docker compose build
             docker compose up -d
