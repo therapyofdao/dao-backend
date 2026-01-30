@@ -27,5 +27,5 @@ jobs:
             git fetch origin main
             git checkout -B main origin/main
 
-            docker compose build
-            docker compose up -d
+            docker compose -f docker-compose.production.yml build
+            docker compose -f docker-compose.production.yml up -d
